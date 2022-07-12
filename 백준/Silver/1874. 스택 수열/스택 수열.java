@@ -5,8 +5,8 @@ public class Main {
 		Scanner scan = new Scanner(System.in);
 		
 		int n = scan.nextInt();
-		int[] arr = new int[n];			//수열
-		int[] stack = new int[n+1];		//스택
+		int[] arr = new int[n];		//수열
+		int[] stack = new int[n+1];	//스택
 		char[] result = new char[n*2]; 	//연산
 		
 		for(int i=0; i<n; i++) {
