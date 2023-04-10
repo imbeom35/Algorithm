@@ -12,6 +12,7 @@ public class Main {
 	
 	public static void main(String[] args) throws Exception {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		StringBuilder sb = new StringBuilder();
 		StringTokenizer st = new StringTokenizer(br.readLine());
 		R = Integer.parseInt(st.nextToken());
 		C = Integer.parseInt(st.nextToken());
@@ -40,13 +41,15 @@ public class Main {
 		for(int y=0; y<R; y++) {
 			for(int x=0; x<C; x++) {
 				if(field[y][x] > 0) {
-					System.out.print('O');
+					sb.append('O');
 				} else {
-					System.out.print('.');
+					sb.append('.');
 				}
 			}
-			System.out.println();
+			sb.append("\n");
 		}
+		
+		System.out.println(sb.toString());
 		
 		br.close();
 	}
