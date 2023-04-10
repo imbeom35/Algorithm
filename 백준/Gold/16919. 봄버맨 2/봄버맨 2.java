@@ -36,6 +36,18 @@ public class Main {
 		// 3과 4를 반복한다.
 		action();
 		
+		// 결과 출력
+		for(int y=0; y<R; y++) {
+			for(int x=0; x<C; x++) {
+				if(field[y][x] > 0) {
+					System.out.print('O');
+				} else {
+					System.out.print('.');
+				}
+			}
+			System.out.println();
+		}
+		
 		br.close();
 	}
 	
@@ -79,18 +91,6 @@ public class Main {
 			
 			// 종료조건
 			if(N <= 0) break;
-		}
-		
-		// 결과 출력
-		for(int y=0; y<R; y++) {
-			for(int x=0; x<C; x++) {
-				if(field[y][x] > 0) {
-					System.out.print('O');
-				} else {
-					System.out.print('.');
-				}
-			}
-			System.out.println();
 		}
 	}
 }
