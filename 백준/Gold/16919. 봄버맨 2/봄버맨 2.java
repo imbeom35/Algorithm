@@ -5,6 +5,7 @@ import java.util.*;
 public class Main {
 	
 	static int R, C, N;
+	static int time = 0;
 	static int[][] field;
 	static int[] dx = {0, 0, -1, 1};
 	static int[] dy = {-1, 1, 0, 0};
@@ -17,7 +18,7 @@ public class Main {
 		N = Integer.parseInt(st.nextToken());
 		field = new int[R][C];
 		
-		// 1. 가장 처음에 봄버맨은 일부 칸에 폭탄을 설치해 놓는다.
+		// 폭탄 설치
 		for(int y=0; y<R; y++) {
 			String input = br.readLine();
 			for(int x=0; x<C; x++) {
@@ -27,11 +28,10 @@ public class Main {
 			}
 		}
 		
-		// 2. 다음 1초 동안 봄버맨은 아무것도 하지 않는다.
-		time();
-		
 		// 설정
-		N %= 400;
+		if(N >= 8) {
+			N = N % 4 + 4;
+		}
 		
 		// 3과 4를 반복한다.
 		action();
@@ -42,44 +42,37 @@ public class Main {
 	static void action() {
 		Queue<Point> queue = new ArrayDeque<>();
 		
-		// 3과 4를 반복한다.
-		while(true) {
-			// 3. 폭탄이 설치되어 있지 않은 모든 칸에 폭탄을 설치한다.
-			if(N > 0) {
-				time();
-				
+		while(time++ < N) {
+			// 폭탄이 설치되어 있지 않은 모든 칸에 폭탄을 설치한다.
+			if(time%2 == 0) {
 				for(int y=0; y<R; y++) {
 					for(int x=0; x<C; x++) {
 						if(field[y][x] == 0) {
-							field[y][x] = 3;
+							field[y][x] = time + 3;
 						}
 					}
 				}
 			}
 			
-			// 4. 3초 전에 설치된 폭탄이 모두 폭발한다.
-			if(N > 0) {
-				time();
-				
-				// 폭발하는 폭탄을 큐에 저장한다.
-				for(int y=0; y<R; y++) {
-					for(int x=0; x<C; x++) {
-						if(field[y][x] == 0) {
-							queue.add(new Point(x, y));
-						}
+			// 3초 전에 설치된 폭탄이 모두 폭발한다.
+			for(int y=0; y<R; y++) {
+				for(int x=0; x<C; x++) {
+					if(field[y][x] == time) {
+						field[y][x] = 0;
+						queue.add(new Point(x, y));
 					}
 				}
-				
-				// 동시에 폭발하며 인접한 네 칸도 함께 파괴된다.
-				while(!queue.isEmpty()) {
-					Point p = queue.poll();
-					for(int i=0; i<4; i++) {
-						int nx = p.x + dx[i];
-						int ny = p.y + dy[i];
-						
-						if(0 <= nx && nx < C && 0 <= ny && ny < R) {
-							field[ny][nx] = 0;
-						}
+			}
+			
+			// 동시에 폭발하며 인접한 네 칸도 함께 파괴된다.
+			while(!queue.isEmpty()) {
+				Point p = queue.poll();
+				for(int i=0; i<4; i++) {
+					int nx = p.x + dx[i];
+					int ny = p.y + dy[i];
+					
+					if(0 <= nx && nx < C && 0 <= ny && ny < R) {
+						field[ny][nx] = 0;
 					}
 				}
 			}
@@ -89,10 +82,6 @@ public class Main {
 		}
 		
 		// 결과 출력
-		print();
-	}
-	
-	static void print() {
 		for(int y=0; y<R; y++) {
 			for(int x=0; x<C; x++) {
 				if(field[y][x] > 0) {
@@ -102,16 +91,6 @@ public class Main {
 				}
 			}
 			System.out.println();
-		}
-	}
-	
-	static void time() {
-		N--;
-		
-		for(int y=0; y<R; y++) {
-			for(int x=0; x<C; x++) {
-				if(field[y][x] > 0) field[y][x]--;
-			}
 		}
 	}
 }
