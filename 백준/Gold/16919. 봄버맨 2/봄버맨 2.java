@@ -29,7 +29,7 @@ public class Main {
 			}
 		}
 		
-		// 설정
+		// 
 		if(N >= 8) {
 			N = N % 4 + 4;
 		}
