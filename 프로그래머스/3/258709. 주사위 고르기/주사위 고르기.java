@@ -1,3 +1,5 @@
+import java.util.*;
+
 class Solution {
     static int max = Integer.MIN_VALUE;
     static int N;
@@ -11,7 +13,7 @@ class Solution {
         dices = dice;
         N = dice.length;
         answer = new int[N / 2];
-        coiceDice(0, 0);
+        choiceDice(0, 0);
         return answer;
     }
     
@@ -22,7 +24,7 @@ class Solution {
         }
         for(int i=0; i<6; i++) {
             int newSum = sum + dice[depth][i];
-            makeArr(depth + 1, dice, newSum, arr);
+            makeSumList(depth + 1, dice, newSum, sumList);
         }
     }
     
@@ -52,18 +54,18 @@ class Solution {
         
         makeSumListAB();
         
-        Collections.sort(arrB);
+        Collections.sort(sumListB);
         
         // 이분 탐색
-        for(int i=0; i<arrA.size(); i++) {
-            int number = arrA.get(i);
+        for(int i=0; i<sumListA.size(); i++) {
+            int number = sumListA.get(i);
             int left = 0;
-            int right = arrB.size() - 1;
+            int right = sumListB.size() - 1;
             int index = Integer.MIN_VALUE;
             while(left <= right) {
                 int middle = (left + right) / 2;
                 
-                if(arrB.get(middle) < number) {
+                if(sumListB.get(middle) < number) {
                     left = middle + 1;
                     index = Math.max(index, middle);
                 } else {
